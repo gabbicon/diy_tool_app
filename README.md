@@ -1,6 +1,6 @@
-## cut plan tool
+## cutting material plan tool
 
-# [Run Tool online](https://gabbicon.github.io/diy_tool_app/)
+# [Run this tool online](https://gabbicon.github.io/diy_tool_app/)
 
 ### dev description
 
