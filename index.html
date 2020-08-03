@@ -2,9 +2,11 @@
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
-	<title>วางแผนวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</title>
+	<title>วางแผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</title>
 	
 <style>
+	input { color: blue; width: 50px; font-weight: bold; text-align: right; padding-right: 10px; background-color: #DDD;}
+	B { color: blue;}
 	.line { border: 1px solid #333; user-select: none; width: 900px; margin-top: 10px;}
 	.part { display: inline-block; text-align: center; background-color: #67917d; box-shadow:0px 0px 0px 1px #333 inset;}
 	.partL {background-color: #acac3c;}
@@ -13,7 +15,7 @@
 </style>
 </head>
 <body>
-	<h2>วางแผนวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</h2>
+	<h2>วางแผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</h2>
 	<hr />
 	
 	<div id="vue">
@@ -36,16 +38,26 @@
 			</tr>
 		</table>
 		<hr />
-		<div>{{info}}</div>
-		<div>แผ่นประกบมุม = {{cornner}} แผ่น</div>
-		<div>น๊อตยึดมุม = {{cornner*3}} ชุด</div>
-		<div>------------------------------</div>
 		<div>ท่อนตั้ง {{D_hight}}cm จำนวน 4 ท่อน</div>
 		<div>ท่อนยาว {{D_long}}cm จำนวน {{count*2}} ท่อน</div>
 		<div>ท่อนกว้าง {{D_width}}cm จำนวน {{count*2}} ท่อน</div>
 		<hr />
-		<div>ใช้เหล็กฉาก 3 เมตร จำนวน {{linecut.length}} เส้น ตัดท่อนตามรูป</div>
-		<br />
+		<table>
+			<tr>
+				<td>ราคาเหล็กฉากเจาะรู 1 เส้น</td>
+				<td><input type="" v-model="line_price" placeholder="ตัวเลข"/> บาท</td>
+				<td> , ราคาแผ่นประกบมุม 1 ถุง (20 แผ่น)</td>
+				<td><input type="" v-model="plate_price" placeholder="ตัวเลข"/> บาท</td>
+				<td> , ราคาน๊อต 1 ถุง (40 ตัว)</td>
+				<td><input type="" v-model="nut_price" placeholder="ตัวเลข"/> บาท</td>
+			</tr>
+		</table>
+		<div>------------------------------</div>
+		<div>ใช้เหล็กฉากเจาะรู 3 เมตร จำนวน <b>{{linecut.length}} เส้น</b> ตัดท่อนตามรูป --- รวมราคาเหล็กเต็มเส้นที่ใช้ทั้งหมด <b>{{line_price*linecut.length}} บาท</b></div>
+		<div>แผ่นประกบมุม = <b>{{cornner}} แผ่น</b>  [ประมาณ {{pack_cornner}} ถุง] --- รวมราคา <b>{{plate_price*pack_cornner}} บาท</b></div>
+		<div>น๊อตยึดมุม = <b>{{cornner*3}} ชุด</b>  [ประมาณ {{pack_nut}} ถุง] --- รวมราคา <b>{{nut_price*pack_nut}} บาท</b></div>
+		<div>------------------------------ รวมราคาทั้งหมด <b>{{(line_price*linecut.length)+(plate_price*pack_cornner)+(nut_price*pack_nut)}} บาท</b></div>
+		<hr />
 		<div class="line" v-for="(line, i) in linecut" >
 			<span class="part" v-for="part in line" v-bind:class="{'partL': part==D_long, 'partW': part==D_width}" v-bind:style="{ width: (part*3) + 'px' }">{{part}}</span>
 		</div>
@@ -61,13 +73,13 @@
 	var vueapp = new Vue({
 		el:'#vue',
 		data:{
-			proj: 1,
-			on_edit:0,
-			inline: 32,
 			count: 5,
 			D_hight: 180,
 			D_long: 120,
 			D_width: 40,
+			line_price: 130, 
+			nut_price: 55,
+			plate_price: 50,
 			info: '',
 			rail_draw: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 		},
@@ -75,6 +87,12 @@
 			cornner: function () {
 			// `this` points to the vm instance
 				return (this.count*4*2);
+			},
+			pack_cornner: function () {
+				return Math.ceil((this.count*4*2)/20);
+			},
+			pack_nut: function () {
+				return Math.ceil((this.count*4*6)/40);
 			},
 			linecut: function () {
 				var part_list = new Array(Number(this.D_hight), Number(this.D_hight), Number(this.D_hight), Number(this.D_hight));
@@ -102,7 +120,7 @@
 				//console.log('part_item = ', part_item);
 				return part_item;
 			}
-        },
+        }
 	});
 	
 	</script>
