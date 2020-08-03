@@ -2,7 +2,7 @@
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
-	<title>วางแผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</title>
+	<title>แผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</title>
 	
 <style>
 	input { color: blue; width: 50px; font-weight: bold; text-align: right; padding-right: 10px; background-color: #DDD;}
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-	<h2>วางแผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</h2>
+	<h2>แผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</h2>
 	<hr />
 	
 	<div id="vue">
@@ -23,24 +23,24 @@
 			<tr>
 				<td>จำนวนชั้นวาง</td>
 				<td><input type="" v-model="count" placeholder="ตัวเลข"/></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>ความสูงรวม (H)</td>
-				<td><input type="" v-model="D_hight" placeholder="ตัวเลข"/></td>
+				<td><input type="" v-model="D_hight" placeholder="ตัวเลข"/> cm</td>
+				<td>...ท่อนตั้งจำนวน <b>4</b> ชิ้น</td>
 			</tr>
 			<tr>
 				<td>ความยาวชั้น (L)</td>
-				<td><input type="" v-model="D_long" placeholder="ตัวเลข"/></td>
+				<td><input type="" v-model="D_long" placeholder="ตัวเลข"/> cm</td>
+				<td>...ท่อนยาวจำนวน <b>{{count*2}}</b> ชิ้น</td>
 			</tr>
 			<tr>
 				<td>ความกว้างชั้น (W)</td>
-				<td><input type="" v-model="D_width" placeholder="ตัวเลข"/></td>
+				<td><input type="" v-model="D_width" placeholder="ตัวเลข"/> cm</td>
+				<td>...ท่อนกว้างจำนวน <b>{{count*2}}</b> ชิ้น</td>
 			</tr>
 		</table>
-		<hr />
-		<div>ท่อนตั้ง {{D_hight}}cm จำนวน 4 ท่อน</div>
-		<div>ท่อนยาว {{D_long}}cm จำนวน {{count*2}} ท่อน</div>
-		<div>ท่อนกว้าง {{D_width}}cm จำนวน {{count*2}} ท่อน</div>
 		<hr />
 		<table>
 			<tr>
