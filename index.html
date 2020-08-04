@@ -2,67 +2,116 @@
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
-	<title>แผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</title>
+	<title>แผนการตัดวัสดุ ชั้นวางของเหล็กฉากเจาะรู</title>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"> 
 	
 <style>
-	input { color: blue; width: 50px; font-weight: bold; text-align: right; padding-right: 10px; background-color: #DDD;}
-	B { color: blue;}
-	.line { border: 1px solid #333; user-select: none; width: 900px; margin-top: 10px;}
-	.part { display: inline-block; text-align: center; background-color: #67917d; box-shadow:0px 0px 0px 1px #333 inset;}
-	.partL {background-color: #acac3c;}
-	.partW {background-color: #6969D0;}
+/**
+grid layout css by
+https://github.com/andhart/bijou
+**/
+a{font-size:.95em;text-decoration:none;color:#5f90b0}a:hover{color:#406882}*{margin:0;padding:0;font-family:"Kanit",sans-serif}.container{width:1000px;margin:0 auto}.pull-left{float:left}.pull-right{float:right}.row{min-height:2em;line-height:2em;width:100%}.span{float:left;display:inline;min-height:1em;margin:0 2% 20px 2%}.span:first-child{margin-left:0}.span:last-child{margin-right:0}.one{width:8%}.two{width:16%}.three{width:24%}.four{width:32%}.five{width:40%}.six{width:48%}.seven{width:56%}.eight{width:64%}.nine{width:72%}.ten{width:80%}.eleven{width:88%}.twelve{width:100%}.container:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden}.row:before,.row:after{content:'\0020';display:block;overflow:hidden;visibility:hidden;width:0;height:0}.row:after{clear:both}.row{zoom:1}h1,h2,h3,h4,h5,h6{font-weight:500}h1{font-size:3.5em}h2{font-size:2.5em}h3{font-size:2em}h4{font-size:1.5em}h5{font-size:1em}h6{font-size:.8em}.table{width:100%;border-spacing:0;border-collapse:collapse;text-align:left}.table th,.table td{border-bottom:2px #d1d1d1 solid;padding:8px 12px}.table td{border-bottom:1px #d4d4d4 solid}.table.table-striped tbody tr:nth-child(2n+1){background-color:#f3f3f3}.table.table-bordered{border:1px #CCC solid}.table.table-bordered td,.table.table-bordered th{border:1px #CCC solid}.button{border:0;border-radius:4px;outline:0;cursor:pointer;}.button.small{padding:7px 20px;font-size:.95em}.button.large{padding:15px 45px;font-size:1.1em}.button.primary{color:#FFF;background:#5f90b0}.button.primary:hover{background:#5589ab}.button.success{color:#FFF;background:#4daf7c}.button.success:hover{background:#48a474}.button.danger{color:#FFF;background:#e6623c}.button.danger:hover{background:#e4572e}.navbar{background:#00a4dd;padding:10px;margin-bottom:10px;border-bottom:1px #DDD solid;height:30px}.navbar h4{color:#FFF;font-weight:200}.navbar li{display:inline-block;padding:.3em 15px 0 0}.navbar li:last-child{padding-right:0}.navbar.fixed{position:fixed;left:0;right:0;top:0}.alert{padding:15px;margin:10px 0;border-radius:3px}.alert.primary{background:#e8eff3;border:1px #c5d7e3 solid}.alert.success{background:#daeee4;border:1px #b6dfca solid}.alert.danger{background:#fdf4f1;border:1px #f7cfc4 solid}@media only screen and (min-width: 768px) and (max-width: 999px){.container{width:768px}}@media only screen and (max-width: 767px){.container{width:300px}.container .table{width:100%;display:block;overflow:auto}}@media only screen and (min-width: 480px) and (max-width: 767px){.container{width:420px}.container .table{display:table}}
 
+	input { color: #00a4dd; width: 50px; font-weight: bold; text-align: right; padding-right: 10px; border: 1px solid #b8b8b8; background-color: #EBEBEB;}
+	B { color: #00a4dd;}
+	.line { font-size: .9em; user-select: none; width: 100%; margin-top: 10px; background-color: #ebebeb;}
+	.part { color: #FFF; display: inline-block; text-align: center; padding: 1px 0px; background-color: #00a4dd; box-shadow:0px 0px 0px 1px #FFF inset;}
+	.partL { background-color: #1bcc12;}
+	.partW { color: #14970e; background-color: #75da65;}
+	
+	.flexwidth { width: 50%;}
+	.navbar a { color: #FFF;}
 </style>
 </head>
 <body>
-	<h2>แผนการตัดวัสดุ ชั้นวางของจากเหล็กฉากเจาะรู</h2>
-	<hr />
+
+	<div class="navbar fixed">
+		<div class="container">
+			<h4 class="pull-left">Gabbicon Tool</h4>
+			<ul class="pull-right">
+			<li><a href="https://github.com/gabbicon/diy_tool_app">Github</a></li>
+			<li><a href="https://github.com/gabbicon/diy_tool_app/archive/master.zip">Download</a></li>
+			</ul>
+		</div>
+	</div>
 	
-	<div id="vue">
-		<table>
-			<tr>
-				<td>จำนวนชั้นวาง</td>
-				<td><input type="" v-model="count" placeholder="ตัวเลข"/></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>ความสูงรวม (H)</td>
-				<td><input type="" v-model="D_hight" placeholder="ตัวเลข"/> cm</td>
-				<td>...ท่อนตั้งจำนวน <b>4</b> ชิ้น</td>
-			</tr>
-			<tr>
-				<td>ความยาวชั้น (L)</td>
-				<td><input type="" v-model="D_long" placeholder="ตัวเลข"/> cm</td>
-				<td>...ท่อนยาวจำนวน <b>{{count*2}}</b> ชิ้น</td>
-			</tr>
-			<tr>
-				<td>ความกว้างชั้น (W)</td>
-				<td><input type="" v-model="D_width" placeholder="ตัวเลข"/> cm</td>
-				<td>...ท่อนกว้างจำนวน <b>{{count*2}}</b> ชิ้น</td>
-			</tr>
-		</table>
-		<hr />
-		<table>
-			<tr>
-				<td>ราคาเหล็กฉากเจาะรู 1 เส้น</td>
-				<td><input type="" v-model="line_price" placeholder="ตัวเลข"/> บาท</td>
-				<td> , ราคาแผ่นประกบมุม 1 ถุง (20 แผ่น)</td>
-				<td><input type="" v-model="plate_price" placeholder="ตัวเลข"/> บาท</td>
-				<td> , ราคาน๊อต 1 ถุง (40 ตัว)</td>
-				<td><input type="" v-model="nut_price" placeholder="ตัวเลข"/> บาท</td>
-			</tr>
-		</table>
-		<div>------------------------------</div>
-		<div>ใช้เหล็กฉากเจาะรู 3 เมตร จำนวน <b>{{linecut.length}} เส้น</b> ตัดท่อนตามรูป --- รวมราคาเหล็กเต็มเส้นที่ใช้ทั้งหมด <b>{{line_price*linecut.length}} บาท</b></div>
-		<div>แผ่นประกบมุม = <b>{{cornner}} แผ่น</b>  [ประมาณ {{pack_cornner}} ถุง] --- รวมราคา <b>{{plate_price*pack_cornner}} บาท</b></div>
-		<div>น๊อตยึดมุม = <b>{{cornner*3}} ชุด</b>  [ประมาณ {{pack_nut}} ถุง] --- รวมราคา <b>{{nut_price*pack_nut}} บาท</b></div>
-		<div>------------------------------ รวมราคาทั้งหมด <b>{{(line_price*linecut.length)+(plate_price*pack_cornner)+(nut_price*pack_nut)}} บาท</b></div>
-		<hr />
-		<div class="line" v-for="(line, i) in linecut" >
-			<span class="part" v-for="part in line" v-bind:class="{'partL': part==D_long, 'partW': part==D_width}" v-bind:style="{ width: (part*3) + 'px' }">{{part}}</span>
+	<div class="header" style="text-align: right; padding: 10px 30px;">
+		<a href="https://gabbicon.github.io/diy_tool_app/ ">open on github.io/diy_tool_app </a>
+	</div>
+	<div id="vue" class="container">
+		<div class="row" style="padding: 20px 0px;">
+			<div class="span twelve ">
+				<h2 style="text-align: center;">แผนการตัดวัสดุ ชั้นวางของเหล็กฉากเจาะรู</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span six">
+				<table class='table'>
+					<tr>
+						<td>จำนวนชั้นวาง</td>
+						<td><input type="" v-model="count" placeholder="ตัวเลข"/> ชั้น</td>
+					</tr>
+					<tr>
+						<td>ความสูงรวม (H)</td>
+						<td><input type="" v-model="D_hight" placeholder="ตัวเลข"/> cm --- จำนวน <b>4</b> ชิ้น</td>
+					</tr>
+					<tr>
+						<td>ความยาวชั้น (L)</td>
+						<td><input type="" v-model="D_long" placeholder="ตัวเลข"/> cm --- จำนวน <b>{{count*2}}</b> ชิ้น</td>
+					</tr>
+					<tr>
+						<td>ความกว้างชั้น (W)</td>
+						<td><input type="" v-model="D_width" placeholder="ตัวเลข"/> cm --- จำนวน <b>{{count*2}}</b> ชิ้น</td>
+					</tr>
+				</table>
+			</div>
+			<div class="span six">
+				<table class='table'>
+					<tr>
+						<td colspan="2">ราคาวัสดุ</td>
+					</tr>
+					<tr>
+						<td>เหล็กฉากเจาะรู 1 เส้น</td>
+						<td><input type="" v-model="line_price" placeholder="ตัวเลข"/> บาท</td>
+					</tr>
+					<tr>
+						<td>แผ่นประกบมุม 1 ถุง (20 แผ่น)</td>
+						<td><input type="" v-model="plate_price" placeholder="ตัวเลข"/> บาท</td>
+					</tr>
+					<tr>
+						<td>น๊อต 1 ถุง (40 ตัว)</td>
+						<td><input type="" v-model="nut_price" placeholder="ตัวเลข"/> บาท</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	
+	
+		<div class="row">
+			<div class="span ten ">
+				<div class="alert primary">
+				<div>ใช้เหล็กฉากเจาะรู 3 เมตร จำนวน <b>{{linecut.length}} เส้น</b> ตัดท่อนตามรูป --- รวมราคาเหล็กเต็มเส้นที่ใช้ทั้งหมด <b>{{line_price*linecut.length}} บาท</b></div>
+					<div>แผ่นประกบมุม = <b>{{cornner}} แผ่น</b>  [ประมาณ {{pack_cornner}} ถุง] --- รวมราคา <b>{{plate_price*pack_cornner}} บาท</b></div>
+					<div>น๊อตยึดมุม = <b>{{cornner*3}} ชุด</b>  [ประมาณ {{pack_nut}} ถุง] --- รวมราคา <b>{{nut_price*pack_nut}} บาท</b></div>
+				</div>
+			</div>
+			<div class="span two">
+				<div class="alert success">
+					ค่าวัสดุทั้งหมด <br /><h4><b>{{(line_price*linecut.length)+(plate_price*pack_cornner)+(nut_price*pack_nut)}} บาท</b></h4>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span twelve ">
+				<div class="line" v-for="(line, i) in linecut" >
+					<span class="part" v-for="part in line" v-bind:class="{'partL': part==D_long, 'partW': part==D_width}" v-bind:style="{ width: (part/3) + '%' }">{{part}}</span>
+				</div>
+			</div>
+		</div>
+		
 	</div>
+	
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
 	<script>
 	
