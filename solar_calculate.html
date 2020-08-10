@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>เครื่องมือคำนวนกำลัง ระบบโซล่าเซลล์ออฟกริด</title>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"> 
+	<link href="bijou-custom-min.css" rel="stylesheet"> 
+	
+<style>
+
+/* Hide Input Number Arrows */
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button { -webkit-appearance: none;  margin: 0;}
+input[type=number] { -moz-appearance: textfield;}
+
+	input { color: #00a4dd; width: 50px; font-weight: bold; font-size: 1.1em; text-align: right; padding-right: 10px; border: 1px solid #b8b8b8; background-color: #EBEBEB;}
+	select { color: #00a4dd; font-weight: bold; font-size: 1.1em; }
+	B { color: #00a4dd; font-size: 1.1em; }
+	.line { font-size: .9em; user-select: none; width: 100%; line-height: 1.5em; margin-top: 10px; background-color: #ebebeb;}
+	.part { color: #FFF; display: inline-block; text-align: center; padding: 1px 0px; background-color: #00a4dd; box-shadow:0px 0px 0px 1px #FFF inset;}
+	.partL { background-color: #1bcc12;}
+	.partW { color: #14970e; background-color: #75da65;}
+	
+	.flexwidth { width: 50%;}
+	.navbar a { color: #FFF;}
+	.alert { color: #e8401a;}
+	.del { color: #e8401a; cursor: pointer;}
+	input.mini_num { width: 30px;}
+	b.over { color: #e8401a;}
+</style>
+</head>
+<body>
+
+	<div class="navbar fixed">
+		<div class="container">
+			<h4 class="pull-left">Gabbicon Mini Tool</h4>
+			<ul class="pull-right">
+			<li><a href="https://github.com/gabbicon/diy_tool_app">Github</a></li>
+			<li><a href="https://github.com/gabbicon/diy_tool_app/archive/master.zip">Download</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="header" style="text-align: right; padding: 10px 30px;">
+		<a href="https://gabbicon.github.io/diy_tool_app/ ">open on github.io/diy_tool_app </a>
+	</div>
+	<div id="vue" class="container">
+		<div class="row" style="padding: 30px 0px 15px;">
+			<div class="span twelve ">
+				<h2 style="text-align: center;">เครื่องมือคำนวนกำลัง ระบบโซล่าเซลล์ออฟกริด</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span six">
+				<table class='table'>
+					<tr>
+						<td colspan="2">> กำลังการผลิตไฟฟ้า &nbsp;&nbsp;&nbsp;(รวม <b>{{all_panel_watt}}</b> วัตต์/ชั่วโมง)
+							<br>
+                            เฉลี่ยการได้รับแสงราว {{sun_hour}} ชั่วโมงต่อวัน &nbsp;&nbsp;&nbsp;(รวมผลิตได้ <b>{{(all_panel_watt*sun_hour)}}</b> วัตต์ต่อวัน)
+							<br> &nbsp;
+							<span class="alert" v-if="total_loads>(all_panel_watt*sun_hour)">***ผลิตไฟฟ้าได้น้อยกว่าใช้ ต้องเพิ่มกำลังหรือจำนวนแผง</span>
+						</td>
+					</tr>
+					<tr>
+						<td>ขนาดกำลังของแผง</td>
+						<td>
+							<input type="number" :max="800" v-model="panel_watt" placeholder="ตัวเลข"/> วัตต์ &nbsp;
+							<input class="mini_num" type="number" :min="1" :max="50" v-model="count" placeholder="ตัวเลข"/> แผง
+						</td>
+					</tr>
+					<tr>
+                        <td>ระบบแบตเตอรี่</td>
+                        <td>
+                            <div>
+                                <select v-model="battery_volt">
+                                    <option disabled value="">เลือก..</option>
+                                    <option value="12">12v</option>
+                                    <option value="24">24v</option>
+                                    <option value="48">48v</option>
+                                </select>
+                            </div>
+                            <span v-if="battery_volt==24 && (panel_watt<250 && count<2)" class="alert">ถ้าแผงวัตต์น้อยๆ อาจเป็นแผง 18v ซึ่งจะมีแรงดันไม่พอสำหรับระบบ 24v</span>
+                            <span v-if="battery_volt==48 && (panel_watt<250 || count<2)" class="alert">แรงดันแผงอาจไม่พอสำหรับระบบ 48v</span>
+                        </td>
+					</tr>
+					<tr>
+						<td style="vertical-align: top;">ความจุแบบเตอรี่</td>
+						<td>
+							<input type="number" v-model="battery_amp"/> แอมป์ &nbsp;
+							<input class="mini_num" type="number" v-model="battery_count"/> ลูก/ชุด
+                            <br>
+							ความจุรวม {{battery_amp*battery_count}} แอมป์ 
+							<br>
+							เก็บพลังงานได้ <b>{{all_battery_watt}}</b> วัตต์
+							<br>
+							---
+                            <br> &nbsp;
+							<span class="alert" v-if="total_loads>all_battery_watt">***เก็บพลังไฟฟ้าได้น้อยกว่าใช้ ต้องเพิ่มความจุหรือจำนวนแบตเตอรี่</span>
+                            &nbsp;&nbsp;&nbsp;แนะนำความจุรวมไม่ควรน้อยกว่า {{battery_recommend}} แอมป์
+							<br>
+							หากต้องการเก็บไฟฟ้าสูงสุดที่ผลิตได้ทั้งวันครบ
+                        </td>
+					</tr>
+				</table>
+			</div>
+			<div class="span six">
+				<table class='table'>
+					<tr>
+						<td colspan="5">> โหลดที่ใช้ในระบบต่อคืน 12 ชั่วโมง &nbsp;&nbsp;&nbsp;(รวม <b>{{total_loads}}</b> วัตต์)
+						<br> ใช้พลังงาน <b v-bind:class="{'over': loads_percent>100}">{{loads_percent}}%</b> จากที่ผลิตได้	
+						<br> ดึงแบตเตอรี่ <b v-bind:class="{'over': batt_percent>100}">{{batt_percent}}%</b> ของความจุ (DOD)	&nbsp;
+						</td>
+					</tr>
+					<tr>
+						<th align="center" style="vertical-align: top;">รายการ</th>
+						<th align="center">กำลัง<br>(วัตต์)</th>
+						<th align="center" style="vertical-align: top;">จำนวน</th>
+						<th align="center">เวลาใช้<br>(ชั่วโมง)</th>
+						<th align="center">-</th>
+					</tr>
+					<tr v-for="(item, i) in loads">
+						<td><input type="" v-model="item.name" style="width: 150px; text-align: left;"/></td>
+						<td align="center"><input type="number" v-model="item.watt"/></td>
+						<td align="center"><input class="mini_num" type="number" v-model="item.count"/></td>
+						<td align="center"><input class="mini_num" type="number" :max="12" v-model="item.hour" placeholder="ไม่เกิน 12"/></td>
+						<td class="del" align="center" @click="removeItem(i)">ลบ</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="4"><button class="button primary small" @click="addItem()">+ เพิ่มรายการ</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	
+	</div>
+	
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+	<script>
+	
+	var ch1 = localStorage.getItem('char1');
+	/*if(!ch1)
+		ch1 = 'โครงการ 1:120x4:40x4,โครงการ 2:120x8:40x8,โครงการ 3:120x8:40x8';*/
+	
+	var vueapp = new Vue({
+		el:'#vue',
+		data:{
+			panel_watt: 330,
+			count: 2,
+			battery_volt: 12,
+			battery_amp: 120,
+			battery_count: 1,
+            sun_hour: 5,
+			DOD: 100,
+			loads: [
+				{ name: 'หลอดไฟกลางบ้าน', watt: 5, count: 4, hour: 6},
+				{ name: 'หลอดไฟข้างบ้าน', watt: 5, count: '2', hour: 12},
+				{ name: 'ทีวี 12v', watt: 25, count: '1', hour: 6},
+				{ name: 'พัดลม 12v', watt: 18, count: '1', hour: 12}
+			],
+		},
+        computed: {
+			all_panel_watt: function () {
+			// `this` points to the vm instance
+				return (this.count*this.panel_watt);
+			},
+			all_battery_watt: function () {
+			// `this` points to the vm instance
+				return (this.battery_count*this.battery_volt*this.battery_amp);
+			},
+			battery_recommend: function () {
+				return Math.ceil(((this.count*this.panel_watt*this.sun_hour)/this.battery_volt)*(100/this.DOD));
+			},
+			total_loads: function(){
+				let sum = 0;
+				this.loads.forEach(function(item) {
+					sum += (parseFloat(item.watt) * parseFloat(item.hour) * parseFloat(item.count));
+				});
+
+				return sum;
+			},
+			loads_percent: function(){
+				return Math.ceil((this.total_loads/(this.all_panel_watt*this.sun_hour))*100)
+			},
+			batt_percent: function(){
+				return Math.ceil((this.total_loads/this.all_battery_watt)*100);
+			}
+		},
+		methods: {
+			addItem: function () {
+				this.loads.push({ name: '-', watt: 0, count: 1, hour: 1});
+			},
+			removeItem: function (index) {
+				this.loads.splice(index, 1);
+			}
+		}
+		
+
+	});
+	
+	</script>
+</body>
+</html>
