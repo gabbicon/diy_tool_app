@@ -19,6 +19,8 @@ input[type=number] { -moz-appearance: textfield;}
 	.part { color: #FFF; display: inline-block; text-align: center; padding: 1px 0px; background-color: #00a4dd; box-shadow:0px 0px 0px 1px #FFF inset;}
 	.partL { background-color: #1bcc12;}
 	.partW { color: #14970e; background-color: #75da65;}
+	.meter { font-size: 4px; height: 8px; line-height: 8px; background-color: #00a4dd;}
+	.meter .lv { display: inline-block; font-size: 4px; height: 8px; width: 50%; max-width: 100%; line-height: 8px; background-color: #ff5400;}
 	
 	.flexwidth { width: 50%;}
 	.navbar a { color: #FFF;}
@@ -55,7 +57,12 @@ input[type=number] { -moz-appearance: textfield;}
 					<tr>
 						<td colspan="2">> กำลังการผลิตไฟฟ้า &nbsp;&nbsp;&nbsp;(รวม <b>{{all_panel_watt}}</b> วัตต์/ชั่วโมง)
 							<br>
-                            เฉลี่ยการได้รับแสงราว {{sun_hour}} ชั่วโมงต่อวัน &nbsp;&nbsp;&nbsp;(รวมผลิตได้ <b>{{(all_panel_watt*sun_hour)}}</b> วัตต์ต่อวัน)
+                            ถัวเฉลี่ยการได้รับแสงราว
+							<select v-model="sun_hour">
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+							ชั่วโมงต่อวัน &nbsp;&nbsp;&nbsp;(รวมแผงผลิตได้ <b>{{(all_panel_watt*sun_hour)}}</b> วัตต์ต่อวัน)
 							<br> &nbsp;
 							<span class="alert" v-if="total_loads>(all_panel_watt*sun_hour)">***ผลิตไฟฟ้าได้น้อยกว่าใช้ ต้องเพิ่มกำลังหรือจำนวนแผง</span>
 						</td>
@@ -97,7 +104,7 @@ input[type=number] { -moz-appearance: textfield;}
 							<span class="alert" v-if="total_loads>all_battery_watt">***เก็บพลังไฟฟ้าได้น้อยกว่าใช้ ต้องเพิ่มความจุหรือจำนวนแบตเตอรี่</span>
                             &nbsp;&nbsp;&nbsp;แนะนำความจุรวมไม่ควรน้อยกว่า {{battery_recommend}} แอมป์
 							<br>
-							หากต้องการเก็บไฟฟ้าสูงสุดที่ผลิตได้ทั้งวันครบ
+							หากต้องการเก็บไฟฟ้าทีผลิตได้จากแผงทั้งวันสูงสุด
                         </td>
 					</tr>
 				</table>
@@ -105,9 +112,11 @@ input[type=number] { -moz-appearance: textfield;}
 			<div class="span six">
 				<table class='table'>
 					<tr>
-						<td colspan="5">> โหลดที่ใช้ในระบบต่อคืน 12 ชั่วโมง &nbsp;&nbsp;&nbsp;(รวม <b>{{total_loads}}</b> วัตต์)
-						<br> ใช้พลังงาน <b v-bind:class="{'over': loads_percent>100}">{{loads_percent}}%</b> จากที่ผลิตได้	
-						<br> ดึงแบตเตอรี่ <b v-bind:class="{'over': batt_percent>100}">{{batt_percent}}%</b> ของความจุ (DOD)	&nbsp;
+						<td colspan="5">> โหลดที่ใช้ในระบบต่อวัน &nbsp;&nbsp;&nbsp;(รวม <b>{{total_loads}}</b> วัตต์)
+						<br> ใช้พลังงาน <b v-bind:class="{'over': loads_percent>100}">{{loads_percent}}%</b> จากที่ผลิตได้ในหนึ่งวัน
+						<div class="meter"><span class="lv" v-bind:style="{ width: loads_percent + '%' }"></span></div>	
+						ดึงแบตเตอรี่ <b v-bind:class="{'over': batt_percent>100}">{{batt_percent}}%</b> ของความจุ (DOD)	&nbsp;
+						<div class="meter"><span class="lv" v-bind:style="{ width: batt_percent + '%' }"></span></div>	
 						</td>
 					</tr>
 					<tr>
@@ -144,18 +153,18 @@ input[type=number] { -moz-appearance: textfield;}
 	var vueapp = new Vue({
 		el:'#vue',
 		data:{
-			panel_watt: 330,
-			count: 2,
+			panel_watt: 170,
+			count: 1,
 			battery_volt: 12,
 			battery_amp: 120,
 			battery_count: 1,
-            sun_hour: 5,
+            sun_hour: 4,
 			DOD: 100,
 			loads: [
 				{ name: 'หลอดไฟกลางบ้าน', watt: 5, count: 4, hour: 6},
 				{ name: 'หลอดไฟข้างบ้าน', watt: 5, count: '2', hour: 12},
 				{ name: 'ทีวี 12v', watt: 25, count: '1', hour: 6},
-				{ name: 'พัดลม 12v', watt: 18, count: '1', hour: 12}
+				{ name: 'พัดลม 12v', watt: 20, count: '1', hour: 4}
 			],
 		},
         computed: {
