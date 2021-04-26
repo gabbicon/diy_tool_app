@@ -124,6 +124,11 @@ input[type=number] { -moz-appearance: textfield;}
 	/*if(!ch1)
 		ch1 = 'โครงการ 1:120x4:40x4,โครงการ 2:120x8:40x8,โครงการ 3:120x8:40x8';*/
 	
+	var dlv = 5;
+	var dh = 180;
+	var dl = 120;
+	var dw = 40;
+	
 	var price1 = 130;
 	var price2 = 50;
 	var price3 = 55;
@@ -131,6 +136,15 @@ input[type=number] { -moz-appearance: textfield;}
 	var urlParams = new URLSearchParams(window.location.search);
 	//console.log(urlParams.has('test')); // true
 	//console.log(urlParams.get('test')); // "MyParam"
+	if(urlParams.has('lv'))
+		dlv = urlParams.get('lv');
+	if(urlParams.has('h'))
+		dh = urlParams.get('h');
+	if(urlParams.has('l'))
+		dl = urlParams.get('l');
+	if(urlParams.has('w'))
+		dw = urlParams.get('w');
+		
 	if(urlParams.has('p1'))
 		price1 = urlParams.get('p1');
 	if(urlParams.has('p2'))
@@ -141,10 +155,10 @@ input[type=number] { -moz-appearance: textfield;}
 	var vueapp = new Vue({
 		el:'#vue',
 		data:{
-			count: 5,
-			D_hight: 180,
-			D_long: 120,
-			D_width: 40,
+			count: dlv,
+			D_hight: dh,
+			D_long: dl,
+			D_width: dw,
 			line_price: price1, 
 			plate_price: price2,
 			nut_price: price3,
