@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>แผนการตัดวัสดุ ชั้นวางของเหล็กฉากเจาะรู</title>
+	<link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet"> 
+	
+<style>
+/**
+grid layout css by
+https://github.com/andhart/bijou
+**/
+a{font-size:.95em;text-decoration:none;color:#5f90b0}a:hover{color:#406882}*{margin:0;padding:0;font-family:"Kanit",sans-serif}.container{width:1000px;margin:0 auto}.pull-left{float:left}.pull-right{float:right}.row{min-height:2em;line-height:2em;width:100%}.span{float:left;display:inline;min-height:1em;margin:0 2% 20px 2%}.span:first-child{margin-left:0}.span:last-child{margin-right:0}.one{width:8%}.two{width:16%}.three{width:24%}.four{width:32%}.five{width:40%}.six{width:48%}.seven{width:56%}.eight{width:64%}.nine{width:72%}.ten{width:80%}.eleven{width:88%}.twelve{width:100%}.container:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden}.row:before,.row:after{content:'\0020';display:block;overflow:hidden;visibility:hidden;width:0;height:0}.row:after{clear:both}.row{zoom:1}h1,h2,h3,h4,h5,h6{font-weight:500}h1{font-size:3.5em}h2{font-size:2.5em}h3{font-size:2em}h4{font-size:1.5em}h5{font-size:1em}h6{font-size:.8em}.table{width:100%;border-spacing:0;border-collapse:collapse;text-align:left}.table th,.table td{border-bottom:2px #d1d1d1 solid;padding:8px 12px}.table td{border-bottom:1px #d4d4d4 solid}.table.table-striped tbody tr:nth-child(2n+1){background-color:#f3f3f3}.table.table-bordered{border:1px #CCC solid}.table.table-bordered td,.table.table-bordered th{border:1px #CCC solid}.button{border:0;border-radius:4px;outline:0;cursor:pointer;}.button.small{padding:7px 20px;font-size:.95em}.button.large{padding:15px 45px;font-size:1.1em}.button.primary{color:#FFF;background:#5f90b0}.button.primary:hover{background:#5589ab}.button.success{color:#FFF;background:#4daf7c}.button.success:hover{background:#48a474}.button.danger{color:#FFF;background:#e6623c}.button.danger:hover{background:#e4572e}.navbar{background:#00a4dd;padding:10px;margin-bottom:10px;border-bottom:1px #DDD solid;height:30px}.navbar h4{color:#FFF;font-weight:200}.navbar li{display:inline-block;padding:.3em 15px 0 0}.navbar li:last-child{padding-right:0}.navbar.fixed{position:fixed;left:0;right:0;top:0}.alert{padding:15px;margin:10px 0;border-radius:3px}.alert.primary{background:#e8eff3;border:1px #c5d7e3 solid}.alert.success{background:#daeee4;border:1px #b6dfca solid}.alert.danger{background:#fdf4f1;border:1px #f7cfc4 solid}@media only screen and (min-width: 768px) and (max-width: 999px){.container{width:768px}}@media only screen and (max-width: 767px){.container{width:300px}.container .table{width:100%;display:block;overflow:auto}}@media only screen and (min-width: 480px) and (max-width: 767px){.container{width:420px}.container .table{display:table}}
+
+/* Hide Input Number Arrows */
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button { -webkit-appearance: none;  margin: 0;}
+input[type=number] { -moz-appearance: textfield;}
+
+	input { color: #00a4dd; width: 50px; font-weight: bold; font-size: 1.1em; text-align: right; padding-right: 10px; border: 1px solid #b8b8b8; background-color: #EBEBEB;}
+	select { color: #00a4dd; font-weight: bold; font-size: 1.1em; }
+	B { color: #00a4dd; font-size: 1.1em; }
+	.line { font-size: .9em; user-select: none; width: 100%; line-height: 1.5em; margin-top: 10px; background-color: #ebebeb;}
+	.part { color: #FFF; display: inline-block; text-align: center; padding: 1px 0px; background-color: #00a4dd; box-shadow:0px 0px 0px 1px #FFF inset;}
+	.partL { background-color: #1bcc12;}
+	.partW { color: #14970e; background-color: #75da65;}
+	
+	.flexwidth { width: 50%;}
+	.navbar a { color: #FFF;}
+</style>
+</head>
+<body>
+
+	<div class="navbar fixed">
+		<div class="container">
+			<h4 class="pull-left">Gabbicon Mini Tool</h4>
+			<ul class="pull-right">
+			<li><a href="https://github.com/gabbicon/diy_tool_app">Github</a></li>
+			<li><a href="https://github.com/gabbicon/diy_tool_app/archive/master.zip">Download</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="header" style="text-align: right; padding: 10px 30px;">
+		<a href="https://gabbicon.github.io/diy_tool_app/ ">open on github.io/diy_tool_app </a>
+	</div>
+	<div id="vue" class="container">
+		<div class="row" style="padding: 30px 0px 15px;">
+			<div class="span twelve ">
+				<h2 style="text-align: center;">แผนการตัดวัสดุ ชั้นวางของเหล็กฉากเจาะรู</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span six">
+				<table class='table'>
+					<tr>
+						<td>จำนวนชั้นวาง</td>
+						<td><input type="" v-model="count" placeholder="ตัวเลข"/> ชั้น</td>
+					</tr>
+					<tr>
+						<td>ความสูงรวม (H)</td>
+						<td><input type="" v-model="D_hight" placeholder="ตัวเลข"/> cm --- จำนวน <b>4</b> ชิ้น</td>
+					</tr>
+					<tr>
+						<td>ความยาวชั้น (L)</td>
+						<td><input type="" v-model="D_long" placeholder="ตัวเลข"/> cm --- จำนวน <b>{{count*2}}</b> ชิ้น</td>
+					</tr>
+					<tr>
+						<td>ความกว้างชั้น (W)</td>
+						<td><input type="" v-model="D_width" placeholder="ตัวเลข"/> cm --- จำนวน <b>{{count*2}}</b> ชิ้น</td>
+					</tr>
+				</table>
+			</div>
+			<div class="span six">
+				<table class='table'>
+					<tr>
+						<td colspan="2">ราคาวัสดุ</td>
+					</tr>
+					<tr>
+						<td>เหล็กฉากเจาะรู 1 เส้น</td>
+						<td><input type="" v-model="line_price" placeholder="ตัวเลข"/> บาท</td>
+					</tr>
+					<tr>
+						<td>แผ่นประกบมุม 1 ถุง (20 แผ่น)</td>
+						<td><input type="" v-model="plate_price" placeholder="ตัวเลข"/> บาท</td>
+					</tr>
+					<tr>
+						<td>น๊อต 1 ถุง (40 ตัว)</td>
+						<td><input type="" v-model="nut_price" placeholder="ตัวเลข"/> บาท</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	
+	
+		<div class="row">
+			<div class="span ten ">
+				<div class="alert primary">
+				<div>ใช้เหล็กฉากเจาะรู 3 เมตร จำนวน <b>{{linecut.length}} เส้น</b> ตัดท่อนตามรูป --- รวมราคาเหล็กเต็มเส้นที่ใช้ทั้งหมด <b>{{line_price*linecut.length}} บาท</b></div>
+					<div>แผ่นประกบมุม = <b>{{cornner}} แผ่น</b>  [ประมาณ {{pack_cornner}} ถุง] --- รวมราคา <b>{{plate_price*pack_cornner}} บาท</b></div>
+					<div>น๊อตยึดมุม = <b>{{cornner*3}} ชุด</b>  [ประมาณ {{pack_nut}} ถุง] --- รวมราคา <b>{{nut_price*pack_nut}} บาท</b></div>
+				</div>
+			</div>
+			<div class="span two">
+				<div class="alert success">
+					ค่าวัสดุทั้งหมด <br /><h4><b>{{(line_price*linecut.length)+(plate_price*pack_cornner)+(nut_price*pack_nut)}} บาท</b></h4>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="span twelve ">
+				<div class="line" v-for="(line, i) in linecut" >
+					<span class="part" v-for="part in line" v-bind:class="{'partL': part==D_long, 'partW': part==D_width}" v-bind:style="{ width: (part/3) + '%' }">{{part}}</span>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+	<script>
+	
+	var ch1 = localStorage.getItem('char1');
+	/*if(!ch1)
+		ch1 = 'โครงการ 1:120x4:40x4,โครงการ 2:120x8:40x8,โครงการ 3:120x8:40x8';*/
+	
+	var dlv = 5;
+	var dh = 180;
+	var dl = 120;
+	var dw = 40;
+	
+	var price1 = 130;
+	var price2 = 50;
+	var price3 = 55;
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	//console.log(urlParams.has('test')); // true
+	//console.log(urlParams.get('test')); // "MyParam"
+	if(urlParams.has('lv'))
+		dlv = urlParams.get('lv');
+	if(urlParams.has('h'))
+		dh = urlParams.get('h');
+	if(urlParams.has('l'))
+		dl = urlParams.get('l');
+	if(urlParams.has('w'))
+		dw = urlParams.get('w');
+		
+	if(urlParams.has('p1'))
+		price1 = urlParams.get('p1');
+	if(urlParams.has('p2'))
+		price2 = urlParams.get('p2');
+	if(urlParams.has('p3'))
+		price3 = urlParams.get('p3');
+				
+	var vueapp = new Vue({
+		el:'#vue',
+		data:{
+			count: dlv,
+			D_hight: dh,
+			D_long: dl,
+			D_width: dw,
+			line_price: price1, 
+			plate_price: price2,
+			nut_price: price3,
+		},
+        computed: {
+			cornner: function () {
+			// `this` points to the vm instance
+				return (this.count*4*2);
+			},
+			pack_cornner: function () {
+				return Math.ceil((this.count*4*2)/20);
+			},
+			pack_nut: function () {
+				return Math.ceil((this.count*4*6)/40);
+			},
+			linecut: function () {
+				var part_list = new Array(Number(this.D_hight), Number(this.D_hight), Number(this.D_hight), Number(this.D_hight));
+				for(ii = 0; ii < this.count*2; ii++)
+					part_list.push(Number(this.D_long));
+				for(ii = 0; ii < this.count*2; ii++)
+					part_list.push(Number(this.D_width));
+				var all_item = part_list.length;
+				var part_item = new Array();
+				var corect_item = 0;
+
+				//console.log('part_list = ', part_list, all_item);
+				while (corect_item < all_item) {
+					var line = new Array();
+					for(ii = 0; ii < all_item; ii++){
+						if(line.reduce((a, b) => a + b, 0) + part_list[ii] <= 300){
+							line.push(part_list[ii]);
+							part_list[ii] = 500;
+							corect_item++;
+						}
+					}
+					part_item.push(line);
+				}
+				
+				//console.log('part_item = ', part_item);
+				return part_item;
+			}
+        }
+	});
+	
+	
+	</script>
+</body>
+</html>
